@@ -10,25 +10,201 @@
 
 <html>
 <head>
-  <title>Metamask Demo</title>
+  <title>EYEBALL</title>
 
   <script src="https://cdn.jsdelivr.net/npm/web3@latest/dist/web3.min.js"></script>
-  <script src="https://npmcdn.com/moralis@0.0.6/dist/moralis.js"></script>
+  <script src="https://npmcdn.com/moralis@latest/dist/moralis.js" ></script>
   <script src="//cdn.jsdelivr.net/npm/phaser@3.55.2/dist/phaser.min.js"></script>
+ 
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+<style>
 
+  header{
+      /* background-color: rgba(25, 126, 173, 0.349); */
+      background-color: rgba(82, 25, 173, 0.349);
+      min-height: 10vh;
+      padding-bottom: 1px;
+      border-radius: 500px;
+      border-color: black;
+      border-style: double;
+      border-width: 10px;
+      box-shadow: black;
+    }
 
+  body{
+    background-color: rgb(40, 12, 63);
+    /* background-color: rgb(12, 27, 63); */
+    background-image: url("background");
+  }
 
+  .title{
+    text-align: center;
+    align-self: center;
+    align-content: center;;
+    font-size: 50px;
+    color: #98eaf0;
+    padding: 20px;
+    
+    }
+  .btn1 {
+    padding: 10px;
+    border-width: 3;
+    box-shadow: rgb(245, 245, 245);
+    color: black;
+    }
+  .btn2 {
+    padding: 5px;
+    color: black;
+    align-self: center;
+    align-content: center;
+    }
+  #font{
+    text-align: center;
+    align-self: center;
+    font-size: 25px;
+    color: #98eaf0;
+    padding: 10px;
+  } 
+  #headerMenu{
+    text-align: center;
+    align-self: center;
+  }
+  #userProfile, #createItem, #leaderboard{
+    text-align: center;
+    align-self: center;
+  }
+  .avatarImage{
+    align-self: center;
+    align-content: center;
+    padding: 20px;
+  }
+  #fileAvatar{
+    align-content: center;
+    align-self: center;
+  }
+
+  #txtItemDescription {
+    padding: 10px;
+  }
+
+  #table{
+    align-items: center;
+    text-align: center;
+  }
+  .table{
+    align-content: center;
+  }
+
+</style>
 </head>
 
 <body>
+  <div>
+    <header>
+       <!--<img id="logo" src="peflex.png" alt="logo">--> 
+        <h1 class="title">EYEBALL</h1>
+    </header>
+        <div id="headerMenu" class="container">
+          <br>
+          <div class = "mt-2 mb-2">
+        <button class="btn btn-dark" id="btn-login" onclick="login()">Login with Metamask</button>
+        <button class="btn btn-dark" id="btn-user" onclick="openUserProfile()">Profile</button>
+        <button class="btn btn-dark" id="btn-logout" onclick="logout()">Logout</button>
+      
+        <button class="btn btn-dark" id="btn-restart" onclick="restart()">Restart</button>
+      
+        <button class="btn btn-dark" id="btn-create" onclick="openCreateItem()">Create NFT</button>
+      
+        <button class="btn btn-dark" id="btn-leader" onclick="openLeaderboard()">Leaderboard</button>
+        <button class="btn btn-dark" id="btn-instru" onclick="openInstructions()">How To Play</button>
+      </div>
+      </div> 
+      </div>
+    <div id="startScreen">
+      <h1 id="font">Instructions</h1>
+        <div class = "mt-2 mb-2">
+          <p class= "form-control">The goal of the game is to collect Moralis coins and exit the game successfully. To do this push the switch in the right bottom corner and exit the game by using the door in the left bottom corner. Avoid danger elements and bombs! Move with " W-A-S-D"!</p><p class= "form-control">Log in to Metamask and start playing!</p>
+        </div>
+        <div>
+          <button class="btn btn-dark" id="btn-close" onclick="closeInstructions()">Close</button>
+        </div>
+    </div>
+    <div id="userProfile">
+      <h1 id="font">Profile</h1>
+        <div class = "mt-2 mb-2">
+            <input class="form" type="text" id="txtName" required placeholder="Enter Username">
+        </div>
+        <div class = "mt-2 mb-2">
+            <input class="form" type="text" id="txtEmail" placeholder="Enter Email (optional)">
+        </div>
+        <div class = "mt-2 mb-2">
+          <input  type="file" id="fileAvatar" style="color: white;">
+          <img width="175" height="175" src="" class = "avatarImage" id="imgAvatar" alt="imgAvatarLogo">
+        </div>
+        <div class = "mt-2 mb-4">
+          <label class = "btn btn-dark" id="btn-selectA"for="fileAvatar" style="color: white;"> Select Avatar</label>  
+        </div>
+        <div class = "mt-2 mb-2">
+          <button class="btn btn-dark" id="btn-save" onclick="saveUserProfile()">Save</button>
+          <button class="btn btn-dark" id="closeInstructions" onclick="closeUserProfile()">Close</button>
+        </div>
+    </div>
+    <div id="createItem">
+      <h1 id="font">Create NFT</h1>
+        <div class = "mt-2 mb-2">
+            <input type="text" id="txtItemName" required placeholder="Enter Item Name">
+        </div>
+        <div class = "mt-2 mb-2">
+            <textarea id="txtItemDescription" cols="30" rows="5"  placeholder="Enter Description" required></textarea>
+        </div>  
+        <div class = "mt-2 mb-2">
+            <input type="number" min="1" step = "1" id="numItemPrice" placeholder="Enter Price" required>
+        </div>
+        <div class = "mt-2 mb-2">
+            <!-- <label for="selectItemStatus" style="color: white;">Status</label> -->
+                <select class = "btn btn-dark" id="selectItemStatus">
+                  <option value="0">Not for Sale</option>
+                  <option value="1">Instant Buy</option>
+                  <option value="2">Accept Offers</option>
+                </select>
+        </div>
+        
+        <div class = "mt-4 mb-2">
+            <label class ="btn btn-dark" id="btn-selectA"for="fileItem" style="color: white;"> Select Item</label>
+            <input class="btn2" type="file" id="fileItem" style="color: white;">
+        </div>
+        <div class = "mt-4 mb-2">
+            <button class="btn btn-dark" id="btn-createItem" onclick="createItemNFT()">Create</button>
+            <button class="btn btn-dark" id="btn-closeItem" onclick="closeCreateItem()">Close</button>
+          </div> 
+      <br>
+    
+    </div>
+    <div id ="leaderBoard">
+      <h1 id="font">Leaderboard</h1>
+        <div id="resultLeaderboard" class="table1">
+          <!-- going to be populated via the JS script -->
+        </div>
 
-  <button onclick="login()">Login with Metamask</button>
-  <br><br>
+      <button class ="btn btn-dark"id="closeLeaderboard" onclick="closeLeaderboard()">Close</button>
+    </div>
+
+</div>
+<hr>
 
   <script>
-    Moralis.initialize("APP ID"); // Application id from moralis.io
-    Moralis.serverURL = "SERVER URL"; //Server url from moralis.io
+    // Moralis.initialize("8dPh1QppVuEGeztUT1PGoRznI4eSxFmucdBNr05s");
+    // Moralis.serverURL = "https://gyqnuey9i6cn.usemoralis.com:2053/server";
 
+    const serverUrl = "https://gyqnuey9i6cn.usemoralis.com:2053/server";
+    const appId = "8dPh1QppVuEGeztUT1PGoRznI4eSxFmucdBNr05s";
+    
+    Moralis.start({
+      serverUrl, appId});
+    const TOKEN_CONTRACT_ADDRESS = "0xBf0f5dFEd900083941E07629374e1B946dfc4226";
+    const user = Moralis.User.current();
+    const chainToQuery = "binance testnet";
+    const options = {chain: chainToQuery, address: user.get("ethAddress")}
     var state = {}
     var sprites = []
     var buttonsLocked = {}
@@ -38,16 +214,6 @@
     const MOVE_COOLOFF = 300;
 
     var lastMove = 0;
-
-
-    async function login(){
-      console.log("login clicked");
-      var user = await Moralis.Web3.authenticate();
-      if(user){
-        console.log(user);
-        location.reload(); 
-      }
-    }
 
     console.log(Moralis.User.current())
 
@@ -62,42 +228,664 @@
       },
       physics: {
         default: 'arcade',
-        arcade: { debug: true }
+        arcade: { 
+          gravity: {y: 300},
+          debug: false }
       }
     };
 
-    var game = new Phaser.Game(config);
+    var game;
     var context;
+    var platforms;
+    var acid;
+    var doors;
+    var openDoors;
+    var paket;
+    var box;
+    var danger;
+    var fence;
+    var coins;
+    var schalter;
+
+    var player;
+    var player2;
+    var competitors = {};
+    var cursors;
+    var jumpHeight = -300;
+    var moveLeft = -200;
+    var moveRight = 200;
+    var score = 0;
+    var scoreText;
+    var bombs;
 
     var users = [];
+
+    
+
+    function launchApp(){
+     // let user = Moralis.User.current();
+      if(!user){
+        //alert("No User logged in! Please login using Metamask");
+        showElement(connectButton);
+        showElement(instruction);
+        hideElement(disconnectButton);
+        hideElement(restartButton);
+        hideElement(leaderboardButton);
+        hideElement(userProfile);
+        hideElement(userInfo);
+        hideElement(userItem);
+        hideElement(createItem);
+        hideElement(leaderboard);
+        hideElement(instruction);
+
+      } else { 
+        console.log("LOADING");
+        console.log(user.get("ethAddress"));
+        game = new Phaser.Game(config);
+        
+        populate();
+        hideElement(connectButton);
+        hideElement(userInfo);
+        hideElement(createItem);
+        hideElement(leaderboard);
+        hideElement(instruction);
+      }
+      this.score = 0;
+      this.gameOver = false;
+    }
+// DASHBOARD BUTTONS & LOGIC          
+
+async function populate(){
+      const name = await Moralis.Web3API.account.getTokenBalances({chain: 'bsc testnet', address: user.get('ethAddress')})
+      buildLeaderboardTable(name);
+      // const query = new Moralis.Query("Leaderboard");
+      // const address = leaderScore.get("address");
+      // const score1 = leaderScore.get("score");
+      
+      // buildLeaderboardTable(query);
+
+      // const queryScore = new Moralis.Query("Leaderboard");
+      // const score = await queryScore.find("score");
+      // buildLeaderboardTable(score);
+    }
+
+    function buildLeaderboardTable(data){
+     document.getElementById("resultLeaderboard").innerHTML = 
+      `<table class ="table table-dark table-striped" id="leaderboardTable">
+      </table>`;
+      const table = document.getElementById("leaderboardTable");
+      const rowHeader = `<thead>
+        <tr>
+          <th>User Address</th>
+          <th>Score</th>
+          </thead>`
+      table.innerHTML += rowHeader
+
+      for(let i = 0; i < data.length; i++){
+        let row = 
+        `<tr>
+            <td>${data[i].queryAddress}</td>
+            <td>${data[i].score1}</td>
+        </tr>`
+        table.innerHTML +=row;
+      }
+    }
+
+    function openUserProfile() {
+            //let user = Moralis.User.current();
+          const email = user.get("email");
+          if (email){
+            userEmail.value = email;
+          } else {
+            userEmail.value = "";
+          }
+          userName.value = user.get("username");
+
+          const userAvatar = user.get("avatar");
+          if(userAvatar){
+            userAvatarImg.src = userAvatar.url();
+            //hideElement(selectAvatar);
+            //hideElement(userAvatarFile);
+          } else {
+            hideElement(userAvatarImg);
+          }
+          showElement(userInfo);
+          // showElement(selectAvatar);
+          hideElement(createItem);
+          hideElement(leaderboard);
+          hideElement(userAvatarFile);
+          hideElement(instruction);
+          // showElement(userEmail);
+   
+ }
+    function closeUserProfile() {
+      hideElement(userInfo);
+    }
+    function closeFileSelection(){
+      hideElement(userAvatarFile);
+      hideElement(selectAvatar);
+    } 
+    function openUploadNew() {
+      //showElement(saveInfo);
+      //showElement(userAvatarFile);
+    }
+    function openCreateItem(){
+      showElement(createItem);
+      hideElement(userInfo);
+      hideElement(leaderboard);
+      hideElement(createItemFile);
+      hideElement(instruction);
+    }
+    function closeCreateItem(){
+      hideElement(createItem)
+    }
+    function openLeaderboard(){
+      populate();
+      showElement(leaderboard);
+      hideElement(createItem);
+      hideElement(userInfo);
+      hideElement(instruction);
+    }
+    function closeLeaderboard(){
+      hideElement(leaderboard);
+    }
+    
+    function openInstructions(){
+      showElement(instruction);
+      hideElement(userInfo);
+      hideElement(createItem);
+      hideElement(leaderboard);
+      hideElement(userAvatarFile);
+    }
+
+    function closeInstructions(){
+      hideElement(instruction);
+    }
+    
+    async function saveUserProfile() {
+      user.set("email", userEmail.value);
+      user.set("username", userName.value); 
+          if(userAvatarFile.files.length >0){
+            const file = userAvatarFile.files[0];
+            const name = "photo.jpg";
+            const avatar = new Moralis.File(name, file);
+            user.set("avatar", avatar);
+          }
+      await user.save();
+      openUserProfile();
+      closeFileSelection();
+      //hideElement(saveInfo);
+      //hideElement(userAvatarFile);
+      //hideElement(userAvatarImg);
+    }
+    async function createItemNFT() {
+      if(createItemFile.files.length == 0){
+        alert ("please select file");
+        return;
+      }else if (createItemName.value.length == 0){
+        alert ("please select name for file");
+        return;
+      }
+
+      const nftFile = new Moralis.File("nftFile.jpg", createItemFile.files[0])
+      await nftFile.saveIPFS();
+
+      const nftFilePath = nftFile.ipfs();
+      const nftFileHash = nftFile.hash();
+
+      const metadata = {
+        name: createItemName.value,
+        description: createItemDes.value,
+        nftFilePath: nftFilePath,
+        nftFileHash: nftFileHash
+      };
+      const nftFileMetadataFile = new Moralis.File("metadata.json", {base64 : btoa(JSON.stringify(metadata))});
+      await nftFileMetadataFile.saveIPFS();
+
+      const nftFileMetadataFilePath = nftFileMetadataFile.ipfs();
+      const nftFileMetadataFileHash = nftFileMetadataFile.hash();
+
+      const Item = Moralis.Object.extend("Item");
+
+      const item = new Item();
+      item.set("name", createItemName.value);
+      item.set("description", createItemDes.value);
+      item.set("nftFilePath", nftFilePath);
+      item.set("nftFileHash", nftFileHash);
+      item.set("metadataFilePath", nftFileMetadataFilePath);
+      item.set("metadataFileHash", nftFileMetadataFileHash);
+
+      await item.save();
+      console.log(item);
+    }
+  
+    
+
+    hideElement = (element) => element.style.display = "none";
+    showElement = (element) => element.style.display = "block";
+  
+//Dashboard Consts
+    const connectButton = document.getElementById("btn-login");
+    const disconnectButton = document.getElementById("btn-logout");
+    const restartButton = document.getElementById("btn-restart");
+    const leaderboardButton = document.getElementById("btn-leader");
+// Profile Consts
+    const closeProfile = document.getElementById("btn-close");
+    const userProfile = document.getElementById("btn-user");
+    const userItem = document.getElementById("btn-create");
+    const userInfo = document.getElementById("userProfile");
+    const saveInfo = document.getElementById("btn-save");
+    const userName = document.getElementById("txtName");
+    const userEmail = document.getElementById("txtEmail");
+    const userAvatarImg = document.getElementById("imgAvatar");
+    const userAvatarFile = document.getElementById("fileAvatar");
+    const selectAvatar = document.getElementById("btn-selectA");
+    const uploadNewFile = document.getElementById("btn-uploadNewFile");
+//Create Item Consts
+    const createItem = document.getElementById("createItem");
+    const createItemName = document.getElementById("txtItemName");
+    const createItemDes = document.getElementById("txtItemDescription");
+    const createItemPrice = document.getElementById("numItemPrice");
+    const createItemStatus = document.getElementById("selectItemStatus");
+    const createItemFile = document.getElementById("fileItem");
+    const saveCreateItem = document.getElementById("btn-createItem");
+// Leaderboard Consts
+    const leaderboard = document.getElementById("leaderBoard");
+
+// Instructions
+    const instruction = document.getElementById("startScreen");
+    const closeInstru = document.getElementById("close-instructions")
+
+    // // GAMESCORE const GameScore = Moralis.Object.extend("GameScore");
+
+    //   const gamescore = new GameScore();
+
+//LOADING ASSETS
 
     function preload ()
     {
       context = this;
+      this.load.image("background", "assets/png/BG4.png")
+      //ground
+      this.load.image("ground", "assets/png/Tiles/BGTile (1).png")
+      this.load.image("ground2", "assets/png/Tiles/BGTile (2).png")
+      //player & objects
+      this.load.image("player", "assets/png/character/eyewhite.png")
+      this.load.image("player2", "assets/png/character/eyeblack.png")
+      this.load.image("doorlock", "assets/png/Objects/DoorLocked.png")
+      this.load.image("dooropen", "assets/png/Objects/DoorOpen.png")
+      this.load.image("paket", "assets/png/Objects/Box.png")
+
+      //boxes
+      this.load.image("boxtileL", "assets/png/Tiles/Tile (1).png")
+      this.load.image("boxtile1", "assets/png/Tiles/Tile (2).png")
+      this.load.image("boxtileR", "assets/png/Tiles/Tile (3).png")
+      this.load.image("box", "assets/png/Tiles/Tile (5).png")
+      this.load.image("boxleft", "assets/png/Tiles/Tile (4).png")
+      this.load.image("boxright", "assets/png/Tiles/Tile (6).png")
+      //dangerous
+      this.load.image("acid", "assets/png/Tiles/Acid (1).png")
+      this.load.image("acid2", "assets/png/Tiles/Acid (2).png")
+      this.load.image("saw", "assets/png/Objects/Saw.png")
+      this.load.image("spike", "assets/png/Tiles/Spike.png")
+      //plats
+      this.load.image("platL", "assets/png/Tiles/Tile (12).png")
+      this.load.image("plat1", "assets/png/Tiles/Tile (13).png")
+      this.load.image("platR", "assets/png/Tiles/Tile (14).png")
+      this.load.image("plat2", "assets/png/Tiles/Tile (15).png")
+
+      this.load.image("coin", "assets/moralis6.png")
+      this.load.image("bomb", "assets/png/Objects/Barrel (4).png")
+      this.load.image("fenceL1", "assets/png/Tiles/FenceLeft1.png")
+      this.load.image("fenceL2", "assets/png/Tiles/FenceLeft2.png")
+      this.load.image("fenceL3", "assets/png/Tiles/FenceLeft3.png")
+      this.load.image("fence1", "assets/png/Tiles/Fence (1).png")
+      this.load.image("fence2", "assets/png/Tiles/Fence (2).png")
+      this.load.image("fence3", "assets/png/Tiles/Fence (3).png")
+      this.load.image("fenceR2", "assets/png/Tiles/FenceRight2.png")
+      this.load.image("switch", "assets/png/Objects/Switch (2).png")
+      this.load.image("switch2", "assets/png/Objects/Switch (1).png")
     }
 
+
+// INITIAL SETUP FUNCTION 
     async function create ()
     {
       if(!Moralis.User.current())
         return;
 
+// BACKGROUND
+      this.add.image(600,350, "background").setScale(1);
+    
+// PLATFORMS
+      platforms = this.physics.add.staticGroup();
+      platforms.create(550, 550, "boxtileL").setScale(.2).refreshBody();
+      platforms.create(600, 550, "boxtile1").setScale(.2).refreshBody();
+      platforms.create(650, 550, "boxtile1").setScale(.2).refreshBody();
+      platforms.create(700, 550, "boxtileR").setScale(.2).refreshBody();
+      platforms.create(400, 500, "platR").setScale(.2).refreshBody();
+      platforms.create(350, 500, "plat1").setScale(.2).refreshBody();
+      platforms.create(300, 500, "platL").setScale(.2).refreshBody();
+      platforms.create(800, 300, "platR").setScale(.2).refreshBody();
+      platforms.create(750, 300, "platL").setScale(.2).refreshBody();
+      platforms.create(1000, 200, "plat2").setScale(.2).refreshBody();
+
+// LEFT TOP
+      platforms.create(100, 150, "platL").setScale(.2).refreshBody();
+      platforms.create(150, 150, "plat1").setScale(.2).refreshBody();
+      platforms.create(200, 150, "platR").setScale(.2).refreshBody();
+      
+// 1/2 PLATFORMS
+      platforms.create(150, 625, "plat2").setScale(.2).refreshBody();
+      platforms.create(50, 425, "platL").setScale(.2).refreshBody();
+      platforms.create(100, 425, "plat1").setScale(.2).refreshBody();
+      platforms.create(150, 425, "platR").setScale(.2).refreshBody();
+
+      platforms.create(350, 125, "plat2").setScale(.2).refreshBody();
+      platforms.create(450, 325, "plat2").setScale(.2).refreshBody();
+      platforms.create(850, 125, "plat2").setScale(.2).refreshBody();
+      platforms.create(650, 75, "plat2").setScale(.2).refreshBody();
+      platforms.create(950, 425, "plat2").setScale(.2).refreshBody();
+      platforms.create(1050, 225, "plat2").setScale(.2).refreshBody();  
+
+// DOOR
+      doors = this.physics.add.staticGroup();
+      doors.create(30, 625, "doorlock").setScale(.2).refreshBody();
+
+// SAW & SPIKE DANGER
+      danger = this.physics.add.staticGroup();
+      danger.create(100, 675, "saw").setScale(.1).refreshBody();
+      danger.create(150, 675, "saw").setScale(.1).refreshBody();
+      danger.create(200, 675, "saw").setScale(.1).refreshBody();
+      danger.create(250, 575, "saw").setScale(.1).refreshBody();
+      danger.create(800, 675, "saw").setScale(.1).refreshBody();
+      danger.create(1200, 513, "spike").setScale(.15).refreshBody();
+      danger.create(1050, 200, "spike").setScale(.15).refreshBody();
+      danger.create(150, 126, "spike").setScale(.15).refreshBody();
+      danger.create(350, 101, "spike").setScale(.15).refreshBody();
+      danger.create(100, 401, "spike").setScale(.15).refreshBody();
+      danger.create(350, 476, "spike").setScale(.15).refreshBody();
+
+// BOXES
+      box = this.physics.add.staticGroup();
+        box.create(400, 650, "box").setScale(.2).refreshBody();
+        box.create(350, 650, "box").setScale(.2).refreshBody();
+        box.create(300, 650, "box").setScale(.2).refreshBody();
+        
+        box.create(400, 700, "box").setScale(.2).refreshBody();
+        box.create(350, 700, "box").setScale(.2).refreshBody();
+        box.create(300, 700, "box").setScale(.2).refreshBody();
+        box.create(250, 700, "box").setScale(.2).refreshBody();
+
+        box.create(250, 650, "boxleft").setScale(.2).refreshBody();
+        box.create(250, 600, "boxleft").setScale(.2).refreshBody();
+        box.create(700, 600, "boxright").setScale(.2).refreshBody();
+        box.create(700, 650, "boxright").setScale(.2).refreshBody();
+        box.create(700, 700, "box").setScale(.2).refreshBody();
+        box.create(750, 700, "box").setScale(.2).refreshBody();
+        box.create(800, 700, "box").setScale(.2).refreshBody();
+        box.create(850, 700, "box").setScale(.2).refreshBody();
+
+        box.create(1150, 700, "box").setScale(.2).refreshBody();
+        box.create(1200, 700, "box").setScale(.2).refreshBody();
+        box.create(1200, 650, "boxleft").setScale(.2).refreshBody();
+        box.create(1200, 600, "boxleft").setScale(.2).refreshBody();
+        box.create(1200, 550, "boxleft").setScale(.2).refreshBody();
+        
+        //bottom
+        box.create(200, 700, "box").setScale(.2).refreshBody();
+        box.create(150, 700, "box").setScale(.2).refreshBody();
+        box.create(100, 700, "box").setScale(.2).refreshBody();
+        box.create(50, 700, "box").setScale(.2).refreshBody();
+        box.create(0, 700, "box").setScale(.2).refreshBody();
+
+
+// DANGER ACID
+      acid = this.physics.add.staticGroup();
+        danger.create(300, 607, "acid").setScale(.2).refreshBody();
+        danger.create(350, 607, "acid").setScale(.2).refreshBody();
+        danger.create(400, 607, "acid").setScale(.2).refreshBody();
+        danger.create(450, 607, "acid").setScale(.2).refreshBody();
+        danger.create(500, 607, "acid").setScale(.2).refreshBody();
+        danger.create(550, 607, "acid").setScale(.2).refreshBody();
+        danger.create(600, 607, "acid").setScale(.2).refreshBody();
+        danger.create(650, 607, "acid").setScale(.2).refreshBody();
+
+        danger.create(450, 650, "acid2").setScale(.2).refreshBody();
+        danger.create(500, 650, "acid2").setScale(.2).refreshBody();
+        danger.create(550, 650, "acid2").setScale(.2).refreshBody();
+        danger.create(600, 650, "acid2").setScale(.2).refreshBody();
+        danger.create(650, 650, "acid2").setScale(.2).refreshBody();
+
+        danger.create(450, 700, "acid2").setScale(.2).refreshBody();
+        danger.create(500, 700, "acid2").setScale(.2).refreshBody();
+        danger.create(550, 700, "acid2").setScale(.2).refreshBody();
+        danger.create(600, 700, "acid2").setScale(.2).refreshBody();
+        danger.create(650, 700, "acid2").setScale(.2).refreshBody();
+        danger.create(900, 700, "acid").setScale(.2).refreshBody();
+        danger.create(950, 700, "acid").setScale(.2).refreshBody();
+        danger.create(1000, 700, "acid").setScale(.2).refreshBody();
+        danger.create(1050, 700, "acid").setScale(.2).refreshBody();
+        danger.create(1100, 700, "acid").setScale(.2).refreshBody();
+
+// FENCE
+      fence = this.physics.add.staticGroup();
+        fence.create(1178+4, 605, "fence2").setScale(.2).refreshBody();
+        fence.create(1128+4, 605, "fence2").setScale(.2).refreshBody();
+        fence.create(1102+4, 605, "fence1").setScale(.2).refreshBody();
+        fence.create(1100, 690, "fence2").setScale(.2).refreshBody();
+        fence.create(1050, 690, "fence2").setScale(.2).refreshBody();
+        // fence.create(1105+4, 645, "fenceR2").setScale(.2).refreshBody();
+        // fence.create(1105+4, 695, "fenceR2").setScale(.2).refreshBody();
+
+// SCHALTER
+      schalter = this.physics.add.staticGroup();
+        schalter.create(1150, 650, "switch").setScale(.2).refreshBody();
+         schalter.create(550, 500, "switch").setScale(.2).refreshBody(); // TEST SCHALTER
+
+      function openDoor (schalter, fence){
+          doors.setTint(0xff105500);
+          fence.disableBody(true, true);
+          console.log("door opened");
+
+          openDoors = this.physics.add.staticGroup();
+          openDoors.create(30, 625, "dooropen").setScale(.2).refreshBody();
+          schalter = this.physics.add.staticGroup();
+          schalter.create(1150, 650, "switch2").setScale(.2).refreshBody();
+          paket = this.physics.add.staticGroup();
+          //paket.create(30, 625, "paket").setScale(.12).refreshBody(); --- DOOR PACKAGE
+          
+          paket.create(850, 95 , "paket").setScale(.12).refreshBody();
+          paket.create(950, 395 , "paket").setScale(.12).refreshBody();
+          this.physics.add.collider(player, openDoors, gameWon, null, this);
+          this.physics.add.collider(player, paket, collectPackage, null, this);
+        }
+
+
+// PLAYER DEFINITIONS
+      player = this.physics.add.sprite(650,400, "player").setScale(.12).refreshBody();
+      player.setBounce(0.75);
+      player.setCollideWorldBounds(true);
+      
+      this.physics.add.collider(player,platforms);
+      this.physics.add.collider(player,box);
+      this.physics.add.collider(player, competitors);
+      this.physics.add.collider(player, fence);
+
+      this.physics.add.collider(player, danger, hitDanger, null, this);   
+      //this.physics.add.collider(player, openDoors, gameWon, null, this);
+      this.physics.add.collider(player, paket, collectPackage, null, this);
+      this.physics.add.overlap(player, schalter, openDoor, null, this);   
+      
+
+// COINS
+      coins = this.physics.add.group({
+          key: 'coin',
+          repeat: 9,
+          setXY: { x: 75, y: -15, stepX: 175 }
+          });
+             
+      coins.children.iterate(function (child) {
+          child.setBounceY(Phaser.Math.FloatBetween(0.7, 1));
+          });
+
+      this.physics.add.collider(coins, platforms);  
+      this.physics.add.collider(coins, box);
+      this.physics.add.collider(danger, coins);
+      this.physics.add.collider(coins, bombs);
+      this.physics.add.collider(coins, fence);
+      this.physics.add.collider(coins, paket);
+      this.physics.add.overlap(player, coins, collectCoin, null, this);
+      // this.physics.add.overlap(coins, danger, goneCoin, null, this);
+      coins.setVelocity(Phaser.Math.Between(-100, 100), 0);
+
+// BOMBS
+      bombs = this.physics.add.group();
+        this.physics.add.collider(bombs, platforms);
+        this.physics.add.collider(bombs, box );
+        this.physics.add.collider(player, bombs, hitBomb, null, this);
+        this.physics.add.collider(bombs, coins);
+        this.physics.add.collider(bombs, bombs);
+        this.physics.add.collider(bombs, paket);
+        this.physics.add.overlap(bombs, danger, goneDanger, null, this);
+        this.physics.add.overlap(bombs, fence, goneFence, null, this);
+
+// GAME OVER & OBJECT COLLISION
+
+// COLLECT PACKAGE / COIN
+
+function collectPackage (player, paket){
+            paket.disableBody(true,true);
+            score += 100;
+            scoreText.setText('Score: ' + score);
+              console.log("package collected");
+          }
+
+      function collectCoin (player, coin){
+          coin.disableBody(true, true);
+          score += 10;
+          scoreText.setText('Score: ' + score);
+          if (coins.countActive(true) === 9)
+            {
+              coins.children.iterate(function (child) {
+
+                  child.enableBody(true, child.x, -20, true, true);
+                  child.setBounceY(Phaser.Math.FloatBetween(0.7, 1));
+                  child.setBounce(.75);
+                  child.setVelocity(Phaser.Math.Between(-100, 100), 20);
+                  child.setCollideWorldBounds(true);
+              });
+              var x = (player.x < 400) ? Phaser.Math.Between(400, 800) : Phaser.Math.Between(0, 400);
+              var bomb = bombs.create(x, 16, 'bomb');
+              bomb.setBounce(1);
+              bomb.setCollideWorldBounds(true);
+              bomb.setVelocity(Phaser.Math.Between(-200, 200), 20);
+              }
+          }
+    async function saveScore(){
+        const LeaderBoard = Moralis.Object.extend("Leaderboard");
+        const leaderScore = new LeaderBoard();
+
+        leaderScore.set("address", user.get("ethAddress"));
+        leaderScore.set("score", score);
+        await leaderScore.save();
+      }
+
+
+        function hitBomb (player, bomb){
+            this.physics.pause();
+            player.setTint(0xff0000);
+            gameOver = true;
+            gameOverText.visible = true;
+        }
+
+        function gameWon (player, openDoors){
+          player.setTint(0xff105500);
+          paket.setTint(0xff1000);
+          player.disableBody(true, true);
+          this.physics.pause();
+          gameOver = true;
+          gameWonText.visible = true;
+          saveScore();
+        }
+
+        function hitDanger (player, danger){  
+              player.setTint(0xff0000);
+              this.physics.pause();
+              gameOver = true;
+              gameOverText.visible = true;   
+          }
+        
+        function goneCoin (coins, danger){
+            coins.disableBody(true, true);
+            console.log("coin disappeared");
+          }
+        
+        function goneDanger (bombs, danger){
+            danger.disableBody(true,true);
+            bombs.disableBody(true, true);
+            console.log("bombs&danger disappeared!");
+          }
+        
+        function goneFence(bombs, fence){
+            fence.disableBody(true, true);
+            bombs.disableBody(true,true);
+            console.log("bomb disappeared")
+          }
+        
+
+
+// SCORE TEXT & GAMEOVER TEXT
+    
+    scoreText = this.add.text(16, 16, 'Score: 0', { fontSize: '32px', fill: '#999' });
+    gameOverText = this.add.text(600, 350, 'Game Over!', { fontSize: '64px', fill: '#999' }); 
+    gameWonText = this.add.text(600, 350, "Completed", { fontSize: '64px', fill: '#999' });
+      gameWonText.setOrigin(0.5);
+      gameOverText.setOrigin(0.5);
+          gameWonText.visible = false;
+          gameOverText.visible = false;
+
+//MOVEMENT
+      cursors = this.input.keyboard.createCursorKeys(); 
       this.wKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.W);
       this.aKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
       this.sKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.S);
       this.dKey = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
 
-      let query = new Moralis.Query('Room1');
+      let user = Moralis.User.current();
+      let query = new Moralis.Query('PlayerPosition');
       let subscription = await query.subscribe();
 
-      subscription.on('update', (object) => {
+      // subscription.on('update', (object) => {
 
-        if(!users[object.id])
-          users[object.id] = this.add.rectangle(object.get("x"), object.get("y"), PLAYER_SIZE, PLAYER_SIZE, 0x6666ff);
-        else{
-          let user = users[object.id];
-          user.setPosition(object.get("x"),object.get("y"))
+      //   if(!users[object.id])
+      //     users[object.id] = this.add.rectangle(object.get("x"), object.get("y"), PLAYER_SIZE, PLAYER_SIZE, 0x6666ff);
+      //   else{
+      //     let user = users[object.id];
+      //     user.setPosition(object.get("x"),object.get("y"))
+      //   }
+      // });
+
+      subscription.on("create", (plocation) => {
+        if(plocation.get("player") != user.get("ethAddress")){
+            //if first time seeing
+          if(competitors[plocation.get("player2")] == undefined){
+            //create a sprite
+            competitors[plocation.get("player2")] = this.add.image(plocation.get("x"),plocation.get("y"), "player2").setScale(.125);
+            
+          }
+          else {
+            competitors[plocation.get("player2")].x = plocation.get("x");
+            competitors[plocation.get("player2")].y = plocation.get("y");
+            
+          }
+
+          console.log("someone moved!");
+          console.log(plocation.get("player"));
+          console.log("new X ", plocation.get("x"));
+          console.log("new Y ", plocation.get("y"));
         }
-      });
+      })
 
       await Moralis.Cloud.run("move", {direction:null}); //just to register the player
 
@@ -109,6 +897,7 @@
       gameInitialized = true;
     }
 
+//LOGIC below
     async function  update ()
     {
       if(!gameInitialized)
@@ -124,6 +913,7 @@
       lastMove = new Date();
 
       if (this.wKey.isDown) {
+        player.setVelocityY(jumpHeight);
 
         if(!buttonsLocked["up"]){
           console.log('W is pressed');
@@ -136,6 +926,9 @@
 
       }
       else if(this.aKey.isDown){
+
+        player.setVelocityX(moveLeft);
+
         if(!buttonsLocked["left"]){
           console.log('A is pressed');
 
@@ -146,6 +939,9 @@
         }
       }
       else if(this.sKey.isDown){
+
+        player.setVelocityY(160);
+
         if(!buttonsLocked["down"]){
           console.log('S is pressed');
 
@@ -156,6 +952,9 @@
         }
       }
       else if(this.dKey.isDown){
+
+        player.setVelocityX(moveRight);
+
         if(!buttonsLocked["right"]){
           console.log('D is pressed');
 
@@ -166,20 +965,49 @@
         }
       }
 
+      if(player.lastX!=player.x || player.lastY!=player.y){
+        let user = Moralis.User.current();
+
+        const PlayerPosition = Moralis.Object.extend("PlayerPosition");
+        const playerPosition = new PlayerPosition();
+
+        playerPosition.set("player", user.get("ethAddress"));
+        playerPosition.set("x",player.x);
+        playerPosition.set("y",player.y);
+
+        player.lastX = player.x;
+        player.lastY = player.y;
+        
+        await playerPosition.save();
+      }
+
+    }   
+
+// LOGIN & LOGOUT
+
+    function restart(){
+      location.reload();
     }
 
+    async function login(){
+      console.log("login clicked");
+      var user = await Moralis.Web3.authenticate();
+      launchApp();
+      if(user){
+        console.log(user);
+        location.reload(); 
+      }
+    }
 
+    async function logout(){
+      console.log("logout clicked");
+      await Moralis.User.logOut();
+      location.reload();
+      
+    }
 
-
-
-
+    launchApp();
 
   </script>
-
-
 </body>
-
-
-
-
 </html>
